@@ -831,6 +831,290 @@
       .h-card{display:none}
       .h-card2{display:none}
     }
+
+    /* ─── AGENDA DE TURNOS ──────────────────────── */
+    #agenda { background: linear-gradient(180deg, var(--bg) 0%, var(--bg3) 50%, var(--bg) 100%); }
+
+    .agenda-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    /* Tabs cliente / admin */
+    .ag-tabs {
+      display: flex;
+      background: rgba(255,255,255,0.04);
+      border-radius: 6px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 36px;
+      max-width: 420px;
+    }
+    .ag-tab {
+      flex: 1;
+      padding: 11px;
+      border: none;
+      background: transparent;
+      color: var(--sub);
+      font-family: var(--font-b);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: var(--t);
+    }
+    .ag-tab.active {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    /* Vistas */
+    .ag-view { display: none; }
+    .ag-view.active { display: block; }
+
+    /* Form */
+    .ag-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .ag-group { margin-bottom: 18px; }
+    .ag-label {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .ag-input, .ag-select {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(106,144,176,0.2);
+      border-radius: 4px;
+      padding: 13px 16px;
+      color: var(--white);
+      font-family: var(--font-b);
+      font-size: 0.88rem;
+      outline: none;
+      transition: var(--t);
+      -webkit-appearance: none;
+    }
+    .ag-input:focus, .ag-select:focus {
+      border-color: var(--accent);
+      background: rgba(106,144,176,0.07);
+    }
+    .ag-select option { background: #0f1e2e; color: var(--white); }
+
+    /* Horarios grid */
+    .ag-horarios {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    @media(max-width:480px){ .ag-horarios { grid-template-columns: repeat(4,1fr); } }
+
+    .ag-hora {
+      padding: 10px 4px;
+      border: 1px solid rgba(106,144,176,0.22);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.03);
+      color: var(--sub);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: var(--t);
+      text-align: center;
+      font-family: var(--font-b);
+    }
+    .ag-hora:hover:not(.ag-ocupado):not(.ag-sel) {
+      border-color: var(--accent);
+      color: var(--white);
+      background: rgba(106,144,176,0.1);
+    }
+    .ag-hora.ag-sel {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--white);
+      font-weight: 500;
+    }
+    .ag-hora.ag-ocupado {
+      opacity: 0.28;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    /* Submit */
+    .ag-submit {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--accent), #3d6580);
+      border: none;
+      border-radius: 4px;
+      color: var(--white);
+      font-family: var(--font-b);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: var(--t);
+      margin-top: 8px;
+    }
+    .ag-submit:hover { opacity: 0.87; transform: translateY(-1px); }
+    .ag-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* Result */
+    .ag-result {
+      display: none;
+      padding: 18px 22px;
+      border-radius: 6px;
+      margin-top: 20px;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      animation: fadeIn 0.4s ease;
+    }
+    .ag-result.ok  { display:block; background:rgba(76,175,125,0.1); border:1px solid rgba(76,175,125,0.3); color:#7de0a8; }
+    .ag-result.err { display:block; background:rgba(224,92,92,0.1);  border:1px solid rgba(224,92,92,0.3);  color:#f08888; }
+    .ag-result-title { font-family:var(--font-d); font-size:1.15rem; margin-bottom:6px; }
+
+    /* Admin */
+    .ag-lock-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .ag-pass-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(106,144,176,0.2);
+      border-radius: 4px;
+      padding: 10px 16px;
+    }
+    .ag-pass-wrap input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--white);
+      font-family: var(--font-b);
+      font-size: 0.88rem;
+      width: 130px;
+    }
+    .ag-pass-wrap input::placeholder { color: var(--sub); }
+    .ag-btn-unlock {
+      background: var(--gold);
+      border: none;
+      border-radius: 3px;
+      color: var(--slate);
+      font-family: var(--font-b);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--t);
+    }
+    .ag-btn-unlock:hover { background: var(--gold2); }
+
+    .ag-stats {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .ag-stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(106,144,176,0.14);
+      border-radius: 6px;
+      padding: 16px;
+      text-align: center;
+    }
+    .ag-stat-n {
+      font-family: var(--font-d);
+      font-size: 2rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .ag-stat-l {
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sub);
+      margin-top: 5px;
+    }
+
+    .ag-filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .ag-filter {
+      padding: 7px 16px;
+      border: 1px solid rgba(106,144,176,0.2);
+      border-radius: 20px;
+      background: transparent;
+      color: var(--sub);
+      font-size: 0.74rem;
+      font-family: var(--font-b);
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: var(--t);
+    }
+    .ag-filter.active {
+      background: rgba(106,144,176,0.14);
+      border-color: var(--accent);
+      color: var(--white);
+    }
+
+    .ag-cards { display: flex; flex-direction: column; gap: 12px; }
+    .ag-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(106,144,176,0.16);
+      border-radius: 6px;
+      padding: 18px 22px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: start;
+      animation: fadeIn 0.3s ease;
+      transition: border-color 0.25s;
+    }
+    .ag-card:hover { border-color: rgba(106,144,176,0.32); }
+    .ag-card-fecha  { font-family:var(--font-d); font-size:1.05rem; color:var(--gold); margin-bottom:4px; }
+    .ag-card-svc    { font-size:0.92rem; color:var(--white); margin-bottom:3px; }
+    .ag-card-client { font-size:0.78rem; color:var(--sub); }
+    .ag-card-hora   { font-family:var(--font-d); font-size:1.5rem; color:var(--accent); text-align:right; line-height:1; }
+    .ag-card-badge  { font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; padding:3px 8px; border-radius:2px; background:rgba(76,175,125,0.14); color:#7de0a8; text-align:right; margin-top:5px; }
+    .ag-card-dur    { font-size:0.65rem; color:var(--sub); text-align:right; margin-top:4px; }
+    .ag-btn-cancel  {
+      background:rgba(224,92,92,0.1); border:1px solid rgba(224,92,92,0.22);
+      color:#f08888; font-size:0.7rem; padding:5px 10px; border-radius:3px;
+      cursor:pointer; font-family:var(--font-b); letter-spacing:0.08em;
+      transition:var(--t); margin-top:8px;
+    }
+    .ag-btn-cancel:hover { background:rgba(224,92,92,0.22); }
+
+    .ag-empty {
+      text-align:center; padding:48px 20px;
+      color:var(--sub); font-size:0.88rem; line-height:1.9;
+    }
+    .ag-locked {
+      text-align:center; padding:40px 20px;
+      color:var(--sub); font-size:0.85rem;
+    }
+    .ag-spinner {
+      width:18px; height:18px;
+      border:2px solid rgba(106,144,176,0.2);
+      border-top-color:var(--accent);
+      border-radius:50%;
+      animation:spin 0.7s linear infinite;
+      display:inline-block; vertical-align:middle; margin-right:8px;
+    }
+    @media(max-width:600px){
+      .ag-form-grid { grid-template-columns:1fr; }
+      .ag-stats { grid-template-columns:repeat(3,1fr); }
+    }
   </style>
 </head>
 <body>
@@ -893,6 +1177,7 @@
     <li><a href="#sobre">Nosotros</a></li>
     <li><a href="#galeria">Galería</a></li>
     <li><a href="#testimonios">Testimonios</a></li>
+    <li><a href="#agenda">Turnos</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <a href="https://wa.me/5493482642967?text=Hola%20Cecilia%2C%20quiero%20reservar%20un%20turno" target="_blank" class="nav-cta-btn">
@@ -911,6 +1196,7 @@
   <a href="#sobre" onclick="closeMenu()">Nosotros</a>
   <a href="#galeria" onclick="closeMenu()">Galería</a>
   <a href="#testimonios" onclick="closeMenu()">Testimonios</a>
+  <a href="#agenda" onclick="closeMenu()">Turnos</a>
   <a href="#contacto" onclick="closeMenu()">Contacto</a>
   <a href="https://wa.me/5493482642967" target="_blank" onclick="closeMenu()" style="color:var(--accent2)">WhatsApp</a>
 </nav>
@@ -1308,6 +1594,111 @@
   </div>
 </section>
 
+
+<!-- AGENDA DE TURNOS -->
+<section id="agenda">
+  <div class="max-w">
+    <div class="s-header rev">
+      <div class="s-tag">Sistema de Reservas</div>
+      <h2 class="s-title">Reservá tu <em>turno online</em></h2>
+      <p class="s-sub">Elegí el día, horario y servicio. Confirmación instantánea.</p>
+    </div>
+
+    <div class="agenda-wrap">
+
+      <!-- Tabs -->
+      <div class="ag-tabs">
+        <button class="ag-tab active" onclick="agTab('cliente',this)">📅 Reservar turno</button>
+        <button class="ag-tab" onclick="agTab('admin',this)">🔐 Panel Cecilia</button>
+      </div>
+
+      <!-- ── CLIENTE ── -->
+      <div class="ag-view active" id="ag-view-cliente">
+
+        <div class="ag-group">
+          <label class="ag-label">Nombre completo</label>
+          <input type="text" class="ag-input" id="ag-nombre" placeholder="Tu nombre y apellido">
+        </div>
+
+        <div class="ag-group">
+          <label class="ag-label">Teléfono / WhatsApp</label>
+          <input type="text" class="ag-input" id="ag-telefono" placeholder="+54 9 ...">
+        </div>
+
+        <div class="ag-form-grid">
+          <div class="ag-group">
+            <label class="ag-label">Servicio</label>
+            <select class="ag-select" id="ag-servicio">
+              <option value="">— Elegí un servicio —</option>
+              <option>Tratamientos Faciales</option>
+              <option>Tratamientos Corporales</option>
+              <option>Depilación Láser</option>
+              <option>Masajes</option>
+              <option>Belleza Integral</option>
+              <option>Podología</option>
+            </select>
+          </div>
+          <div class="ag-group">
+            <label class="ag-label">Duración estimada</label>
+            <select class="ag-select" id="ag-duracion">
+              <option value="30">30 min</option>
+              <option value="60" selected>1 hora</option>
+              <option value="90">1h 30min</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ag-group">
+          <label class="ag-label">Fecha</label>
+          <input type="date" class="ag-input" id="ag-fecha">
+        </div>
+
+        <div class="ag-group">
+          <label class="ag-label">Horario disponible</label>
+          <div class="ag-horarios" id="ag-horarios">
+            <span style="color:var(--sub);font-size:0.82rem;grid-column:1/-1">Seleccioná una fecha para ver los horarios disponibles.</span>
+          </div>
+        </div>
+
+        <div class="ag-group">
+          <label class="ag-label">Notas adicionales (opcional)</label>
+          <input type="text" class="ag-input" id="ag-notas" placeholder="Alguna aclaración para Cecilia...">
+        </div>
+
+        <button class="ag-submit" id="ag-btn-reservar" onclick="agReservar()">Confirmar Reserva</button>
+        <div class="ag-result" id="ag-result"></div>
+      </div>
+
+      <!-- ── ADMIN ── -->
+      <div class="ag-view" id="ag-view-admin">
+
+        <div class="ag-lock-row">
+          <div id="ag-lock-area">
+            <div class="ag-pass-wrap">
+              <input type="password" id="ag-pass" placeholder="Contraseña" onkeydown="if(event.key==='Enter')agUnlock()">
+              <button class="ag-btn-unlock" onclick="agUnlock()">Ingresar</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="ag-locked-msg" class="ag-locked">🔒 Ingresá la contraseña para gestionar los turnos.</div>
+
+        <div id="ag-admin-content" style="display:none">
+          <div class="ag-stats" id="ag-stats"></div>
+          <div class="ag-filters">
+            <button class="ag-filter active" onclick="agFilter('todos',this)">Todos</button>
+            <button class="ag-filter" onclick="agFilter('hoy',this)">Hoy</button>
+            <button class="ag-filter" onclick="agFilter('semana',this)">Esta semana</button>
+            <button class="ag-filter" onclick="agFilter('proximos',this)">Próximos</button>
+          </div>
+          <div class="ag-cards" id="ag-cards"><span class="ag-spinner"></span> Cargando...</div>
+        </div>
+
+      </div>
+    </div><!-- /agenda-wrap -->
+  </div>
+</section>
+
 <!-- CTA FINAL -->
 <section id="cta-final">
   <div class="cta-content">
@@ -1534,6 +1925,226 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); }
   });
 });
+
+  /* ════════════════════════════════════════════════
+     AGENDA DE TURNOS
+  ════════════════════════════════════════════════ */
+  (function(){
+    const PASS = 'cecilia2025';
+    const HORARIOS = ['09:00','09:30','10:00','10:30','11:00','11:30',
+                      '12:00','12:30','14:00','14:30','15:00','15:30',
+                      '16:00','16:30','17:00','17:30'];
+    let agHora = null;
+    let agAdmin = false;
+    let agFiltro = 'todos';
+
+    // Fecha mínima = hoy
+    const today = new Date().toISOString().split('T')[0];
+    const fechaInput = document.getElementById('ag-fecha');
+    if(fechaInput) fechaInput.min = today;
+
+    // Storage
+    async function loadTurnos(){
+      try{ const r=await window.storage.get('cs_turnos',true); return r?JSON.parse(r.value):[]; }catch{ return []; }
+    }
+    async function saveTurnos(d){ await window.storage.set('cs_turnos',JSON.stringify(d),true); }
+
+    // Tabs
+    window.agTab = function(view, btn){
+      document.querySelectorAll('.ag-tab').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('ag-view-cliente').classList.toggle('active', view==='cliente');
+      document.getElementById('ag-view-admin').classList.toggle('active',  view==='admin');
+      if(view==='admin' && agAdmin) agRender();
+    };
+
+    // Cargar horarios al cambiar fecha
+    document.getElementById('ag-fecha').addEventListener('change', async function(){
+      const fecha = this.value;
+      agHora = null;
+      const grid = document.getElementById('ag-horarios');
+      grid.innerHTML = '<span class="ag-spinner"></span>';
+
+      // No domingos
+      const d = new Date(fecha+'T12:00:00');
+      if(d.getDay()===0){
+        grid.innerHTML='<span style="color:var(--sub);font-size:0.82rem;grid-column:1/-1">Los domingos no hay atención. Elegí otro día 😊</span>';
+        return;
+      }
+
+      const turnos = await loadTurnos();
+      const dur = parseInt(document.getElementById('ag-duracion').value)||60;
+      const ocupados = turnos.filter(t=>t.fecha===fecha&&t.estado!=='cancelado')
+        .map(t=>({hora:t.hora,dur:parseInt(t.duracion)||60}));
+
+      function isOcupado(h){
+        const [hh,mm]=h.split(':').map(Number), s=hh*60+mm, e=s+dur;
+        return ocupados.some(o=>{ const [oh,om]=o.hora.split(':').map(Number),os=oh*60+om,oe=os+o.dur; return s<oe&&e>os; });
+      }
+
+      grid.innerHTML='';
+      HORARIOS.forEach(h=>{
+        const btn=document.createElement('button');
+        btn.type='button';
+        btn.className='ag-hora'+(isOcupado(h)?' ag-ocupado':'');
+        btn.textContent=h;
+        if(!isOcupado(h)) btn.onclick=()=>{ document.querySelectorAll('.ag-hora').forEach(b=>b.classList.remove('ag-sel')); btn.classList.add('ag-sel'); agHora=h; };
+        grid.appendChild(btn);
+      });
+    });
+
+    document.getElementById('ag-duracion').addEventListener('change',()=>{
+      const f=document.getElementById('ag-fecha').value;
+      if(f) document.getElementById('ag-fecha').dispatchEvent(new Event('change'));
+    });
+
+    // Reservar
+    window.agReservar = async function(){
+      const nombre   = document.getElementById('ag-nombre').value.trim();
+      const telefono = document.getElementById('ag-telefono').value.trim();
+      const servicio = document.getElementById('ag-servicio').value;
+      const fecha    = document.getElementById('ag-fecha').value;
+      const duracion = document.getElementById('ag-duracion').value;
+      const notas    = document.getElementById('ag-notas').value.trim();
+      const res      = document.getElementById('ag-result');
+      const btn      = document.getElementById('ag-btn-reservar');
+
+      res.className='ag-result'; res.style.display='none';
+
+      if(!nombre||!telefono||!servicio||!fecha||!agHora){
+        res.className='ag-result err';
+        res.innerHTML='<div class="ag-result-title">Faltan datos</div>Completá todos los campos y elegí un horario disponible.';
+        res.style.display='block'; return;
+      }
+
+      btn.disabled=true; btn.textContent='Confirmando...';
+
+      const turnos = await loadTurnos();
+      const dur = parseInt(duracion);
+      const [hh,mm]=agHora.split(':').map(Number), s=hh*60+mm, e=s+dur;
+      const conflict = turnos.find(t=>{
+        if(t.fecha!==fecha||t.estado==='cancelado') return false;
+        const [oh,om]=t.hora.split(':').map(Number),os=oh*60+om,oe=os+(parseInt(t.duracion)||60);
+        return s<oe&&e>os;
+      });
+
+      if(conflict){
+        const ocupadas = turnos.filter(t=>t.fecha===fecha&&t.estado!=='cancelado').map(t=>t.hora);
+        const libres = HORARIOS.filter(h=>!ocupadas.includes(h)).slice(0,5);
+        btn.disabled=false; btn.textContent='Confirmar Reserva';
+        agHora=null; document.querySelectorAll('.ag-hora').forEach(b=>b.classList.remove('ag-sel'));
+        res.className='ag-result err';
+        res.innerHTML=`<div class="ag-result-title">⚠️ Horario ocupado</div>
+          Las ${agHora||''}hs ya fue reservado. Otros horarios disponibles ese día:<br>
+          <strong style="color:var(--gold)">${libres.length?libres.join(' · '):'No quedan más horarios ese día.'}</strong>`;
+        res.style.display='block'; return;
+      }
+
+      const turno = { id:Date.now().toString(), nombre, telefono, servicio, fecha, hora:agHora, duracion, notas, estado:'confirmado', creadoEn:new Date().toISOString() };
+      turnos.push(turno);
+      await saveTurnos(turnos);
+
+      btn.disabled=false; btn.textContent='Confirmar Reserva';
+      const fd = new Date(fecha+'T12:00:00').toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'});
+      res.className='ag-result ok';
+      res.innerHTML=`<div class="ag-result-title">✅ ¡Turno confirmado!</div>
+        <strong>${nombre}</strong>, quedaste agendada para el<br>
+        📅 <strong>${fd}</strong> a las <strong>${agHora}hs</strong><br>
+        💆 <strong>${servicio}</strong><br><br>
+        <span style="font-size:0.8rem;opacity:0.8">Cecilia se comunicará por WhatsApp al ${telefono} para confirmar.</span>`;
+      res.style.display='block';
+
+      ['ag-nombre','ag-telefono','ag-notas'].forEach(id=>document.getElementById(id).value='');
+      document.getElementById('ag-servicio').value='';
+      document.getElementById('ag-fecha').value='';
+      document.getElementById('ag-horarios').innerHTML='<span style="color:var(--sub);font-size:0.82rem;grid-column:1/-1">Seleccioná una fecha para ver los horarios disponibles.</span>';
+      agHora=null;
+    };
+
+    // Admin — unlock
+    window.agUnlock = function(){
+      const v=document.getElementById('ag-pass').value;
+      if(v===PASS){
+        agAdmin=true;
+        document.getElementById('ag-locked-msg').style.display='none';
+        document.getElementById('ag-admin-content').style.display='block';
+        document.getElementById('ag-lock-area').innerHTML='<span style="font-size:0.75rem;color:#7de0a8">✓ Sesión activa</span>';
+        agRender();
+      } else {
+        document.getElementById('ag-pass').style.borderColor='var(--red)';
+        setTimeout(()=>{ const p=document.getElementById('ag-pass'); if(p) p.style.borderColor=''; },1200);
+      }
+    };
+
+    // Admin — filtros
+    window.agFilter = function(f,btn){
+      agFiltro=f;
+      document.querySelectorAll('.ag-filter').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      agRender();
+    };
+
+    // Admin — render turnos
+    async function agRender(){
+      const cards=document.getElementById('ag-cards');
+      if(!cards) return;
+      cards.innerHTML='<span class="ag-spinner"></span> Cargando...';
+      const all = await loadTurnos();
+      const hoy = new Date().toISOString().split('T')[0];
+
+      // Stats
+      const activos = all.filter(t=>t.estado!=='cancelado');
+      const hoyN = activos.filter(t=>t.fecha===hoy).length;
+      const semN = activos.filter(t=>{ const d=new Date(t.fecha+'T12:00:00'),n=new Date(); const diff=(d-n)/86400000; return diff>=-1&&diff<=7; }).length;
+      const stats=document.getElementById('ag-stats');
+      if(stats) stats.innerHTML=`
+        <div class="ag-stat"><div class="ag-stat-n">${activos.length}</div><div class="ag-stat-l">Total</div></div>
+        <div class="ag-stat"><div class="ag-stat-n">${hoyN}</div><div class="ag-stat-l">Hoy</div></div>
+        <div class="ag-stat"><div class="ag-stat-n">${semN}</div><div class="ag-stat-l">Esta semana</div></div>
+      `;
+
+      let list = all.filter(t=>t.estado!=='cancelado');
+      if(agFiltro==='hoy')    list=list.filter(t=>t.fecha===hoy);
+      else if(agFiltro==='semana') list=list.filter(t=>{ const d=new Date(t.fecha+'T12:00:00'),n=new Date(); const diff=(d-n)/86400000; return diff>=-1&&diff<=7; });
+      else if(agFiltro==='proximos') list=list.filter(t=>new Date(t.fecha+'T12:00:00')>=new Date());
+      list.sort((a,b)=>(a.fecha+a.hora).localeCompare(b.fecha+b.hora));
+
+      cards.innerHTML='';
+      if(!list.length){ cards.innerHTML='<div class="ag-empty">📋 No hay turnos para mostrar.</div>'; return; }
+
+      list.forEach(t=>{
+        const fd=new Date(t.fecha+'T12:00:00').toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'});
+        const c=document.createElement('div');
+        c.className='ag-card';
+        c.innerHTML=`
+          <div>
+            <div class="ag-card-fecha">${fd}</div>
+            <div class="ag-card-svc">${t.servicio}</div>
+            <div class="ag-card-client">👤 ${t.nombre} &nbsp;·&nbsp; 📱 ${t.telefono}</div>
+            ${t.notas?`<div class="ag-card-client" style="margin-top:3px;font-style:italic">💬 ${t.notas}</div>`:''}
+            <button class="ag-btn-cancel" onclick="agCancelar('${t.id}')">✕ Cancelar</button>
+          </div>
+          <div>
+            <div class="ag-card-hora">${t.hora}</div>
+            <div class="ag-card-badge">Confirmado</div>
+            <div class="ag-card-dur">${t.duracion} min</div>
+          </div>`;
+        cards.appendChild(c);
+      });
+    }
+    window.agRender = agRender;
+
+    // Cancelar turno
+    window.agCancelar = async function(id){
+      if(!confirm('¿Cancelar este turno?')) return;
+      const all=await loadTurnos();
+      const t=all.find(x=>x.id===id); if(t) t.estado='cancelado';
+      await saveTurnos(all);
+      agRender();
+    };
+
+  })();
+
 </script>
 </body>
 </html>
